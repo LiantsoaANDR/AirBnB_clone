@@ -18,10 +18,25 @@ class BaseModel:
                     when an instance is created and it will be updated
                     every time you change your object
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        """
+        Initialize the new BaseModel object
+
+        Args:
+            *args: won't be used
+            **kwargs: dict of the value of our attributes
+        """
         self.id = str(uuid.uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
+
+        if len(kwargs) > 0:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    frm = "%Y-%m-%dT%H:%M:%S.%f"
+                    self.__dict__[key] = datetime.strptime(value, frm)
+                else:
+                    self.__dict__[key] = value
 
     def save(self):
         """
