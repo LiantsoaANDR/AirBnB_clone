@@ -38,6 +38,13 @@ class BaseModel:
                 else:
                     self.__dict__[key] = value
 
+    def __str__(self):
+        """
+        Return the representation of how BaseModel should be printed
+        """
+        name = self.__class__.__name__
+        return ("[{}] ({}) {}".format(name, self.id, self.__dict__))
+
     def save(self):
         """
         updates the public instance attribute updated_at
