@@ -18,9 +18,10 @@ class BaseModel:
                     when an instance is created and it will be updated
                     every time you change your object
     """
-    id = str(uuid.uuid4())
-    created_at = datetime.today()
-    updated_at = datetime.today()
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
 
     def save(self):
         """
@@ -35,7 +36,7 @@ class BaseModel:
         of the instance
         """
         base_dict = self.__dict__.copy()
-        base_dict["__class__"] = self.__class__.name__
+        base_dict["__class__"] = self.__class__.__name__
         base_dict["created_at"] = self.created_at.isoformat()
         base_dict["updated_at"] = self.updated_at.isoformat()
         return base_dict
