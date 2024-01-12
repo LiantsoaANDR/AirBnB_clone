@@ -20,11 +20,11 @@ class FileStorage:
 
     def all(self):
         """returns the dictionary __objects"""
-        return FileStorage.__objetcs
+        return FileStorage.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
-        key = obj.__class__.__name__ + obj.id
+        key = obj.__class__.__name__ + "." + obj.id
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -33,7 +33,7 @@ class FileStorage:
         Saves all the objets into a JSON with the objet dictionaries
         """
         obj_dict = {}
-        for key, value in FileStorage.__objetcs.items():
+        for key, value in FileStorage.__objects.items():
             obj_dict[key] = value.to_dict()
 
         with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
