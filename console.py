@@ -50,10 +50,9 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             obj_key = arg_list[0] + "." + arg_list[1]
-            for key, value in storage.all().items():
-                if key == obj_key:
-                    print(value)
-                    return
+            if obj_key in storage.all():
+                print(storage.all()[obj_key])
+                return
             print("** no instance found **")
 
     def do_destroy(self, arg):
@@ -70,11 +69,10 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             obj_key = arg_list[0] + "." + arg_list[1]
-            for key, value in storage.all().items():
-                if key == obj_key:
-                    storage.all().pop(key)
-                    storage.save()
-                    return
+            if obj_key in storage.all():
+                storage.all().pop(obj_key)
+                storage.save()
+                return
             print("** no instance found **")
 
     def do_all(self, arg):
@@ -115,9 +113,9 @@ class HBNBCommand(cmd.Cmd):
             obj_key = arg_list[0] + "." + arg_list[1]
             if obj_key in storage.all():
                 setattr(
-                        storage.all()[key],
+                        storage.all()[obj_key],
                         arg_list[2],
-                        arg_list[3]
+                        arg_list[3][1:-1]
                         )
                 storage.save()
             else:
